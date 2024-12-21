@@ -66,15 +66,24 @@
                             <label for="cv" class="form-label">Curriculum Vitae (CV)</label>
                             @if ($employee->original_filename)
                                 <h5>{{ $employee->original_filename }}</h5>
-                                <a href="{{ route('employees.downloadFile', ['employeeId' => $employee->id]) }}"
-                                    class="btn btn-primary btn-sm mt-2">
-                                    <i class="bi bi-download me-1"></i> Download CV
-                                </a>
+                                <div class="d-flex align-items-center mt-2">
+                                    <a href="{{ route('employees.downloadFile', ['employeeId' => $employee->id]) }}" class="btn btn-primary btn-sm me-2">
+                                        <i class="bi bi-download me-1"></i> Download CV
+                                    </a>
+                                    <form action="{{ route('employees.deleteFile', ['employeeId' => $employee->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this file?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash me-1"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
                             @else
                                 <h5>Tidak ada</h5>
                             @endif
                             <input type="file" class="form-control mt-2" name="cv" id="cv">
                         </div>
+                        
                     </div>
                     <hr>
                     <div class="row">
