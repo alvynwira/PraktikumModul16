@@ -178,4 +178,19 @@ class EmployeeController extends Controller
             return Storage::download($encryptedFilename, $downloadFilename);
         }
     }
+    public function deleteFile($employeeId)
+    {
+        $employee = Employee::findOrFail($employeeId);
+
+        if ($employee->cv) {
+            // Hapus file fisik jika ada
+            Storage::delete($employee->cv);
+            // Kosongkan kolom cv di database
+            $employee->cv = null;
+            $employee->original_filename = null;
+            $employee->save();
+        }
+
+        return redirect()->back()->with('success', 'CV berhasil dihapus.');
+    }
 }
