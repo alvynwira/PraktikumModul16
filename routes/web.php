@@ -89,3 +89,4 @@ Route::post('/upload-example', function (Request $request) {
 })->name('upload-example');
 
 Route::get('download-file/{employeeId}', [EmployeeController::class, 'downloadFile'])->name('employees.downloadFile');
+Route::delete('/employees/{employeeId}/deleteFile', [EmployeeController::class, 'deleteFile'])->name('employees.deleteFile');
